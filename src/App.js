@@ -22,19 +22,28 @@ const images = importAll([
 
 class ProductList extends Component {
   render() {
-    const product = data[0];
+    const products = data;
+    products.sort((product1, product2) => {
+      if (product1.votes < product2.votes) return -1;
+      else return 1;
+    });
     return (
       <div>
         ProductList is:
-        <ul>
-          <Product
-            productImg={product.product_image_url}
-            title={product.title}
-            description={product.description}
-            submitterImg={product.submitter_avatar_url}
-            votes={product.votes}
-          />
-        </ul>
+        {products.map(product => {
+          return (
+            <ul>
+              <Product
+                productImg={product.product_image_url}
+                title={product.title}
+                url={product.url}
+                description={product.description}
+                submitterImg={product.submitter_avatar_url}
+                votes={product.votes}
+              />
+            </ul>
+          );
+        })}
       </div>
     );
   }
@@ -53,7 +62,9 @@ class Product extends Component {
               </Icon.Group>
               {this.props.votes}
             </Item.Header>
-            <Item.Meta>Description</Item.Meta>
+            <Item.Meta>
+              <a href={this.props.url}>{this.props.title}</a>
+            </Item.Meta>
             <Item.Description>
               <p>{this.props.description}</p>
             </Item.Description>
