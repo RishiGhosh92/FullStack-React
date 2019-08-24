@@ -26,14 +26,13 @@ class ProductList extends Component {
     this.state = {
       products: []
     };
-    this.increaseVote = this.increaseVote.bind(this);
   }
   componentDidMount() {
     this.setState({
       products: data
     });
   }
-  increaseVote(id) {
+  increaseVote = (id) => {
     console.log(id + " clicked");
     let newProducts = this.state.products.map(product => {
       if (product.id === id) {
